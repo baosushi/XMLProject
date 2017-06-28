@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jun 28, 2017 5:07:52 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.entities.Major" table="Major" schema="dbo" catalog="UniversitySimplified" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="majorGroup" class="com.entities.MajorGroup" fetch="select">
+            <column name="MajorGroupId" />
+        </many-to-one>
+        <many-to-one name="university" class="com.entities.University" fetch="select">
+            <column name="UniversityId" />
+        </many-to-one>
+        <property name="mbtigroupId" type="java.lang.Integer">
+            <column name="MBTIGroupId" />
+        </property>
+        <property name="majorName" type="serializable">
+            <column name="MajorName" not-null="true" />
+        </property>
+        <property name="majorCode" type="serializable">
+            <column name="MajorCode" />
+        </property>
+        <property name="alternativeCode" type="serializable">
+            <column name="AlternativeCode" />
+        </property>
+        <property name="educationLevel" type="java.lang.Integer">
+            <column name="EducationLevel" />
+        </property>
+        <property name="limit" type="java.lang.Integer">
+            <column name="Limit" />
+        </property>
+        <property name="examEntryQuantity" type="java.lang.Integer">
+            <column name="ExamEntryQuantity" />
+        </property>
+        <property name="otherEntryQuantity" type="java.lang.Integer">
+            <column name="OtherEntryQuantity" />
+        </property>
+        <property name="lastYearEntryQuantity" type="java.lang.Integer">
+            <column name="LastYearEntryQuantity" />
+        </property>
+        <property name="yearBeforeLastEntryQuantity" type="java.lang.Integer">
+            <column name="YearBeforeLastEntryQuantity" />
+        </property>
+        <property name="gradeToPass" type="java.lang.Double">
+            <column name="GradeToPass" precision="53" scale="0" />
+        </property>
+        <property name="rate" type="java.lang.Integer">
+            <column name="Rate" />
+        </property>
+        <property name="fromGrade" type="java.lang.Integer">
+            <column name="FromGrade" />
+        </property>
+        <property name="blockName" type="serializable">
+            <column name="BlockName" />
+        </property>
+        <property name="toGrade" type="java.lang.Integer">
+            <column name="ToGrade" />
+        </property>
+        <property name="active" type="boolean">
+            <column name="Active" not-null="true" />
+        </property>
+        <property name="description" type="serializable">
+            <column name="Description" />
+        </property>
+    </class>
+</hibernate-mapping>
