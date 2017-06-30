@@ -2,4 +2,5 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="file:/D:/XML_Project/XMLProject/web/WEB-INF/listBlock.xsd" uri="src/conf/xml-resources/jaxb/ListBlock/listBlock.xsd"/>
     <system systemId="file:/D:/XML_Project/XMLProject/web/WEB-INF/subject.xsd" uri="src/conf/xml-resources/jaxb/Subjecttt/subject.xsd"/>
+    <system systemId="file:/D:/XML_Project/XMLProject/web/WEB-INF/block.xsd" uri="src/conf/xml-resources/jaxb/ListBlock/block.xsd"/>
 </catalog>
