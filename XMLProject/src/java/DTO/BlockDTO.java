@@ -1,18 +1,34 @@
 package DTO;
 
-public class BlockDTO {
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "id",
+    "name",
+    "description",
+    "active"})
+public class BlockDTO implements Serializable{
+
+    @XmlElement(required = true)
     private Integer id;
-    private String blockName;
+    @XmlElement(required = true)
+    private String name;
+    @XmlElement(required = false)
     private String description;
+    @XmlElement(required = true)
     private boolean active;
 
     public BlockDTO() {
     }
 
-    public BlockDTO(int id, String blockName, String description, boolean active) {
+    public BlockDTO(int id, String name, String description, boolean active) {
         this.id = id;
-        this.blockName = blockName;
+        this.name = name;
         this.description = description;
         this.active = active;
     }
@@ -26,11 +42,11 @@ public class BlockDTO {
     }
 
     public String getBlockName() {
-        return blockName;
+        return name;
     }
 
-    public void setBlockName(String blockName) {
-        this.blockName = blockName;
+    public void setBlockName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {

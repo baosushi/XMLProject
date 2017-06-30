@@ -4,9 +4,17 @@
         <servlet-name>GetUniversityList</servlet-name>
         <servlet-class>com.servlets.GetUniversityList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CrawlDataOfSubjectsServlet</servlet-name>
+        <servlet-class>com.servlets.CrawlDataOfSubjectsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetUniversityList</servlet-name>
         <url-pattern>/GetUniversityList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CrawlDataOfSubjectsServlet</servlet-name>
+        <url-pattern>/CrawlDataOfSubjectsServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
