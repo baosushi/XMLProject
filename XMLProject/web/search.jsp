@@ -10,42 +10,25 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>University Entrance Info</title>
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
         <div id="demo">
-            <h1>Material Design Responsive Table</h1>
-            <h2>Table of my other Material Design works (list was updated 08.2015)</h2>
-
-            <div class="shadow-z-1">
+            <h1>Danh sách các trường đại học</h1>
+            <h2>Bấm vào từng trường để xem thông tin chi tiết và điểm chuẩn gần nhất</h2>
+            <div class="pull-right"><input type="text" id="keyword" class="search box" placeholder="University name or code" /></div>
+            <div class="table-container">
                 <!-- Table starts here -->
-                <table id="table" class="table table-hover table-mc-light-blue">
+                <table id="table" class="shadow-z-1 table table-hover table-mc-light-blue">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Link</th>
-                            <th>Status</th>
+                            <th>No.</th>
+                            <th>University Name</th>
+                            <th>University Code</th>
+                            <th>Contact Number</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td data-title="ID">1</td>
-                            <td data-title="Name">Material Design Color Palette</td>
-                            <td data-title="Link">
-                                <a href="https://github.com/zavoloklom/material-design-color-palette" target="_blank">GitHub</a>
-                            </td>
-                            <td data-title="Status">Completed</td>
-                        </tr>
-                        <tr>
-                            <td data-title="ID">2</td>
-                            <td data-title="Name">Material Design Iconic Font</td>
-                            <td data-title="Link">
-                                <a href="https://codepen.io/zavoloklom/pen/uqCsB" target="_blank">Codepen</a>
-                                <a href="https://github.com/zavoloklom/material-design-iconic-font" target="_blank">GitHub</a>
-                            </td>
-                            <td data-title="Status">Completed</td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -66,6 +49,18 @@
                 }
             }
 
+            function addRow(tableId, cells) {
+                var table = document.getElementById(tableId);
+                var row = table.tBodies[0].insertRow(table.tBodies[0].rows.length);
+                var tmp;
+                cells.forEach(function (value, index) {
+                    tmp = row.insertCell(row.cells.length);
+                    tmp.innerHTML = value;
+                });
+
+                return row;
+            }
+
             function traversalDOMTree(tableId) {
                 //clear table
                 var table = document.getElementById(tableId);
@@ -77,22 +72,70 @@
                 count = 0;
 
                 //parse DOMTree
-                getUniversityList();
-                console.log(xmlDOM);
-                
-                if(xmlDOM.parseError.errorCode != 0) {
-                    console.log("Error: " + xml.parseError.reason);
+                if (!localStorage.uniList || (new Date() - new Date(localStorage.uniListDataTime)) >= 3600000) {
+                    getUniversityList();
+
+                    xmlHttp.onreadystatechange = function () {
+                        if (xmlHttp.readyState == 4) { // Code 200 (or not :( )
+                            if (xmlHttp.status == 200) {
+                                xmlDOM = xmlHttp.responseXML;
+                                localStorage.uniList = new XMLSerializer().serializeToString(xmlDOM);
+                                localStorage.uniListDataTime = new Date();
+                            } else {
+                                console.log("Request status: " + xmlHttp.status);
+                            }
+
+//                        if (xmlDOM.parseError.errorCode != 0) {
+//                            console.log("Error: " + xml.parseError.reason);
+//                        } else {
+                            searchNode(xmlDOM, tableId);
+//                        }
+                        }
+                    };
                 } else {
-                    searchNode(xmlDOM, tableId)
+                    if (window.DOMParser)
+                    {
+                        var parser = new DOMParser();
+                        xmlDOM = parser.parseFromString(localStorage.uniList, "text/xml");
+                    }
+                    else // Internet Explorer
+                    {
+                        xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+                        xmlDoc.async = false;
+                        xmlDoc.loadXML(localStorage.uniList);
+                    }
+                    
+                    searchNode(xmlDOM, tableId);
                 }
             }
-            
-            function searchNode (node, tableId) {
-                if(node == null) {
+
+            function searchNode(node, tableId) {
+                if (node == null) {
                     return;
                 }
-                
-                if(node.tagName == )
+
+                if (node.tagName == "university") {
+                    data[0] = ++count;
+                    node.childNodes.forEach(function (value, index) {
+                        if (value.tagName == "universityName") {
+                            data[1] = value.firstChild.nodeValue;
+                        }
+
+                        if (value.tagName == "code") {
+                            data[2] = value.firstChild.nodeValue;
+                        }
+
+                        if (value.tagName == "phoneNumber") {
+                            data[3] = !value.firstChild ? "" : value.firstChild.nodeValue;
+                        }
+                    });
+
+                    addRow(tableId, data);
+                }
+
+                node.childNodes.forEach(function (value, index) {
+                    searchNode(value, tableId);
+                });
             }
 
             function getXmlHttpObject() {
@@ -118,36 +161,24 @@
 
                 var url = "GetUniversityList";
 
-                xmlHttp.onreadystatechange = function () {
-                    if (xmlHttp.readyState == 4) { // Code 200 (or not :( )
-                        if(xmlHttp.status == 200) {
-                            xmlDOM = xmlHttp.responseXML;
-                        } else {
-                            console.log("Request status: " + xmlHttp.status);
-                        }
-                    }
-                };
-
                 xmlHttp.open("GET", url, true);
                 xmlHttp.send(null);
             }
 
             (function () {
-                if (!localStorage.uniList) {
+//                if (!localStorage.uniList) {
+//                    getUniversityList();
+//                } else {
+//                    xmlDOM = localStorage.uniList;
+//                }
+//                
+//                if (xmlDOM.parseError.errorCode != 0) {
+//                    console.log("Error: " + xml.parseError.reason);
+//                } else {
+//                    
+//                }
 
-
-                    xhr.onreadystatechange = handleResponse;
-                    function handleResponse() {
-                        if (xhr.readyState == 4) { // Code 200 (or not :( )
-
-                        } else { // Skip if not ready
-
-                        }
-                    }
-
-                    xhr.open("GET", "getUniversityList", false);
-                    xhr.send(null);
-                }
+                traversalDOMTree("table");
             })();
         </script>
     </body>

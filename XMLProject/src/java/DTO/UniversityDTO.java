@@ -1,18 +1,52 @@
 package DTO;
 
-public class UniversityDTO {
+import com.entities.University;
+import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "id",
+    "universityName",
+    "locationId",
+    "phoneNumber",
+    "email",
+    "website",
+    "logoUrl",
+    "priority",
+    "description",
+    "active",
+    "code",
+    "educationLevel"
+})
+public class UniversityDTO implements Serializable {
+
+    @XmlElement(required = true)
     private Integer id;
+    @XmlElement(required = true)
     private String universityName;
+    @XmlElement(required = true)
     private Integer locationId;
+    @XmlElement(required = true)
     private String phoneNumber;
+    @XmlElement(required = true)
     private String email;
+    @XmlElement(required = true)
     private String website;
+    @XmlElement(required = true)
     private String logoUrl;
+    @XmlElement(required = true)
     private Integer priority;
+    @XmlElement(required = true)
     private String description;
+    @XmlElement(required = true)
     private boolean active;
+    @XmlElement(required = true)
     private String code;
+    @XmlElement(required = true)
     private Integer educationLevel;
 
     public UniversityDTO() {
@@ -31,6 +65,21 @@ public class UniversityDTO {
         this.active = active;
         this.code = code;
         this.educationLevel = educationLevel;
+    }
+    
+    public UniversityDTO(University entity) {
+        this.id = entity.getId();
+        this.universityName = entity.getUniversityName();
+        this.locationId = 0; //hardcode to test
+        this.phoneNumber = entity.getPhoneNumber();
+        this.email = entity.getEmail();
+        this.website = entity.getWebsite();
+        this.logoUrl = entity.getLogoUrl();
+        this.priority = entity.getPriority();
+        this.description = entity.getDescription();
+        this.active = entity.getActive();
+        this.code = entity.getCode();
+        this.educationLevel = entity.getEducationLevel();
     }
 
     public int getId() {
