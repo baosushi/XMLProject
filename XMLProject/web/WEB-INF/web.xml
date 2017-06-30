@@ -16,6 +16,9 @@
         <servlet-name>CrawlDataOfSubjectsServlet</servlet-name>
         <url-pattern>/CrawlDataOfSubjectsServlet</url-pattern>
     </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>search.jsp</welcome-file>
+    </welcome-file-list>
     <session-config>
         <session-timeout>
             30

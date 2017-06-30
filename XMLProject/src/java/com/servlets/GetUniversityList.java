@@ -5,10 +5,15 @@
  */
 package com.servlets;
 
+import BLO.UniversityBLO;
+import DTO.UniversityDTO;
+import DTO.UniversityListDTO;
 import com.utilities.Utils;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Temporary
  */
+@WebServlet(name = "GetUniversityList", urlPatterns = {"/GetUniversityList"})
 public class GetUniversityList extends HttpServlet {
 
     /**
@@ -32,7 +38,11 @@ public class GetUniversityList extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            Utils.marshallerToTransfer(request, null);
+            UniversityBLO blo = new UniversityBLO();
+            UniversityListDTO result = blo.getAllUniversityDTO();
+            
+            response.setContentType("text/xml");
+            Utils.marshallerToTransfer(result, response.getOutputStream());
         } finally {
         }
     }
