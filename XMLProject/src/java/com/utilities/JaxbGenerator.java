@@ -10,36 +10,37 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 
 public class JaxbGenerator {
-    public void generateSchemaToJaxb(String schemaFile){
+
+    public void generateSchemaToJaxb(String schemaFile) {
         try {
-            String output = "/";
+            String output = "D:\\XML_Project\\XMLProject\\src\\java";
             SchemaCompiler sc = XJC.createSchemaCompiler();
             sc.setErrorListener(new ErrorListener() {
 
                 @Override
                 public void error(SAXParseException saxpe) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    System.out.println("Error: " + saxpe.getMessage());
                 }
 
                 @Override
                 public void fatalError(SAXParseException saxpe) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    System.out.println("Fatal error: " + saxpe.getMessage());
                 }
 
                 @Override
                 public void warning(SAXParseException saxpe) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    System.out.println("Warning: " + saxpe.getMessage());
                 }
 
                 @Override
                 public void info(SAXParseException saxpe) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                    System.out.println("Info: " + saxpe.getMessage());
                 }
             });
-            
+
             sc.forcePackageName("jaxb.classes");
             File schema = new File(schemaFile);
-            
+
             InputSource inSource = new InputSource(schema.toURI().toString());
             sc.parseSchema(inSource);
             S2JJAXBModel model = sc.bind();
@@ -47,6 +48,7 @@ public class JaxbGenerator {
             code.build(new File(output));
             System.out.println(schemaFile + " generate finished");
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

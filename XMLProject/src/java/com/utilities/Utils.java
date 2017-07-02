@@ -65,4 +65,24 @@ public class Utils {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
     } 
+    
+    public static String removeBrackets(String input) {
+        while (input.contains("<")) {
+            for (int i = input.length() - 1; i >= 0; i--) {
+                if (input.charAt(i) == '>') {
+                    int closeBracket = i + 1;
+                    for (int j = i; j >= 0; j--) {
+                        if (input.charAt(j) == '<') {
+                            int openBracket = j;
+                            String subString = input.substring(openBracket, closeBracket);
+                            input = input.replace(subString, "");
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return input;
+    }
 }

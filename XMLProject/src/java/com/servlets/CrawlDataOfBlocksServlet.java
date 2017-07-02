@@ -6,6 +6,9 @@
 package com.servlets;
 
 import DTO.SubjectDTO;
+import com.utilities.ConstantManager;
+import com.utilities.HtmlParser;
+import com.utilities.JaxbGenerator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Du
  */
-public class CrawlDataOfSubjectsServlet extends HttpServlet {
+public class CrawlDataOfBlocksServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,9 +38,21 @@ public class CrawlDataOfSubjectsServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            /* TODO output your page here. You may use following sample code. */
-            List<SubjectDTO> list = new ArrayList<SubjectDTO>();
+//            JaxbGenerator jaxbGenerator = new JaxbGenerator();
+//            String realpath = this.getServletContext().getRealPath("/");
+//            String schemaPath = realpath + "WEB-INF\\block.xsd";
+//            System.out.println(schemaPath);
+//            jaxbGenerator.generateSchemaToJaxb(schemaPath);
             
+            String url = ConstantManager.khoidaihoc_path;
+            
+//            String realPath = getServletContext().getRealPath("/");
+//            String downloadFilePath = realPath + ConstantManager.xmlDataDownloadPath;
+            
+            HtmlParser parser = new HtmlParser();
+//            parser.parseData(downloadFilePath);
+            parser.parseData(url);
+            parser.saveBlockScrapDataToDB();
         } finally {
             out.close();
         }
