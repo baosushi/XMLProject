@@ -13,7 +13,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -29,6 +28,15 @@ public class UniversityBLO {
         TypedQuery<University> query = em.createNamedQuery("University.findById", University.class);
         query.setParameter("id", id);
         University result = query.getSingleResult();
+
+        return result == null ? null : new UniversityDTO(result);
+    }
+    
+    public UniversityDTO findByCode(String code) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<University> query = em.createNamedQuery("University.findByCode", University.class);
+        query.setParameter("code", code);
+        University result = query.getResultList().get(0);
 
         return result == null ? null : new UniversityDTO(result);
     }

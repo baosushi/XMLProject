@@ -4,6 +4,14 @@
         <servlet-name>GetUniversityList</servlet-name>
         <servlet-class>com.servlets.GetUniversityList</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DispatchServlet</servlet-name>
+        <servlet-class>com.servlets.DispatchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetUniversityInfo</servlet-name>
+        <servlet-class>com.servlets.GetUniversityInfo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetUniversityList</servlet-name>
         <url-pattern>/GetUniversityList</url-pattern>
@@ -11,6 +19,14 @@
     <welcome-file-list>
         <welcome-file>search.jsp</welcome-file>
     </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>DispatchServlet</servlet-name>
+        <url-pattern>/dispatch</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetUniversityInfo</servlet-name>
+        <url-pattern>/university-info</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

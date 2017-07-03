@@ -6,9 +6,12 @@
 package com.servlets;
 
 import BLO.UniversityBLO;
-import DTO.UniversityListDTO;
+import DTO.UniversityDTO;
+import com.utilities.ConstantManager;
 import com.utilities.Utils;
 import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Temporary
  */
-@WebServlet(name = "GetUniversityList", urlPatterns = {"/GetUniversityList"})
-public class GetUniversityList extends HttpServlet {
+@WebServlet(name = "GetUniversityInfo", urlPatterns = {"/university-info"})
+public class GetUniversityInfo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,13 +37,22 @@ public class GetUniversityList extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        String code = request.getParameter("code");
+        String url = ConstantManager.errorPage;
         try {
             UniversityBLO blo = new UniversityBLO();
-            UniversityListDTO result = blo.getAllUniversityDTO();
-            
-            response.setContentType("text/xml");
-            Utils.marshallerToTransfer(result, response.getOutputStream());
+            UniversityDTO uni = blo.findByCode(code);
+
+            String xml = Utils.marshallerToString(uni);
+            if (xml != null) {
+                request.setAttribute("UniInfo", xml);
+                url = ConstantManager.uniInfoPage;
+            }
         } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
+            out.close();
         }
     }
 

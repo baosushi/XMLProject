@@ -7,6 +7,8 @@ package com.utilities;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -53,7 +55,7 @@ public class Utils {
 
         return doc;
     }
-    
+
     public static <T> void marshallerToTransfer(T object, OutputStream os) {
         try {
             JAXBContext jaxb = JAXBContext.newInstance(object.getClass());
@@ -64,5 +66,23 @@ public class Utils {
         } catch (JAXBException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } 
+    }
+
+    public static <T> String marshallerToString(T object) {
+        try {
+            JAXBContext jaxb = JAXBContext.newInstance(object.getClass());
+            Marshaller marshaller = jaxb.createMarshaller();
+//            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+
+            StringWriter sw = new StringWriter();
+            marshaller.marshal(object, sw);
+
+            return sw.toString();
+        } catch (JAXBException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+    }
 }
