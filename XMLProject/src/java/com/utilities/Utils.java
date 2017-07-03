@@ -8,7 +8,6 @@ package com.utilities;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
-import java.io.Writer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -84,5 +83,25 @@ public class Utils {
         }
 
         return null;
+    } 
+    
+    public static String removeBrackets(String input) {
+        while (input.contains("<")) {
+            for (int i = input.length() - 1; i >= 0; i--) {
+                if (input.charAt(i) == '>') {
+                    int closeBracket = i + 1;
+                    for (int j = i; j >= 0; j--) {
+                        if (input.charAt(j) == '<') {
+                            int openBracket = j;
+                            String subString = input.substring(openBracket, closeBracket);
+                            input = input.replace(subString, "");
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        return input;
     }
 }

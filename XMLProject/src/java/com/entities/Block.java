@@ -11,10 +11,13 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -33,8 +36,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Block.findByDescription", query = "SELECT b FROM Block b WHERE b.description = :description"),
     @NamedQuery(name = "Block.findByActive", query = "SELECT b FROM Block b WHERE b.active = :active")})
 public class Block implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
+    @SequenceGenerator(name = "SEQ_GEN", sequenceName = "SEQ_JUST_FOR_TEST", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN")
     @Basic(optional = false)
     @Column(name = "ID")
     private Integer id;
@@ -138,5 +144,5 @@ public class Block implements Serializable {
     public String toString() {
         return "com.entities.Block[ id=" + id + " ]";
     }
-    
+
 }

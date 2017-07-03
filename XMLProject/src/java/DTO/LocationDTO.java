@@ -1,17 +1,30 @@
 package DTO;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "id",
+    "name",
+    "priority"})
 public class LocationDTO {
 
+    @XmlElement(required = true)
     private Integer id;
-    private String locationName;
+    @XmlElement(required = true)
+    private String name;
+    @XmlElement(required = true)
     private Integer priority;
 
     public LocationDTO() {
     }
 
-    public LocationDTO(int id, String locationName, int priority) {
+    public LocationDTO(int id, String name, int priority) {
         this.id = id;
-        this.locationName = locationName;
+        this.name = name;
         this.priority = priority;
     }
 
@@ -24,11 +37,11 @@ public class LocationDTO {
     }
 
     public String getLocationName() {
-        return locationName;
+        return name;
     }
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+    public void setLocationName(String name) {
+        this.name = name;
     }
 
     public int getPriority() {
