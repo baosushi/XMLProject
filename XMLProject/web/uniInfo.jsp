@@ -38,6 +38,20 @@
 
         <script>
             var xml = '${UniInfo}';
+            var xmlDOM;
+            var xmlDoc;
+
+            if (window.DOMParser)
+            {
+                var parser = new DOMParser();
+                xmlDOM = parser.parseFromString(xml, "text/xml");
+            }
+            else // Internet Explorer
+            {
+                xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+                xmlDoc.async = false;
+                xmlDoc.loadXML(xml);
+            }
         </script>
     </body>
 </html>

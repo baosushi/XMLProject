@@ -53,13 +53,13 @@ public class UniversityDTO implements Serializable {
     private String code;
     @XmlElement(required = true)
     private Integer educationLevel;
-    @XmlElement(required = true)
-    private List<MajorDTO> majors;
+//    @XmlElement(required = true)
+//    private List<MajorDTO> majors;
 
     public UniversityDTO() {
     }
 
-    public UniversityDTO(int id, String universityName, int locationId, String phoneNumber, String email, String website, String logoUrl, int priority, String description, boolean active, String code, int educationLevel, List<MajorDTO> majors) {
+    public UniversityDTO(int id, String universityName, int locationId, String phoneNumber, String email, String website, String logoUrl, int priority, String description, boolean active, String code, int educationLevel) {
         this.id = id;
         this.universityName = universityName;
         this.locationId = locationId;
@@ -72,7 +72,6 @@ public class UniversityDTO implements Serializable {
         this.active = active;
         this.code = code;
         this.educationLevel = educationLevel;
-        this.majors = majors;
     }
 
     public UniversityDTO(University entity) {
@@ -89,13 +88,13 @@ public class UniversityDTO implements Serializable {
         this.code = entity.getCode();
         this.educationLevel = entity.getEducationLevel();
 
-        if (this.majors == null) {
-            this.majors = new ArrayList<MajorDTO>();
-        }
-
-        for (Major m : entity.getMajorList()) {
-            this.majors.add(new MajorDTO(m));
-        }
+//        if (this.majors == null) {
+//            this.majors = new ArrayList<MajorDTO>();
+//        }
+//
+//        for (Major m : entity.getMajorList()) {
+//            this.majors.add(new MajorDTO(m));
+//        }
     }
 
     public int getId() {
@@ -194,11 +193,11 @@ public class UniversityDTO implements Serializable {
         this.educationLevel = educationLevel;
     }
 
-    public List<MajorDTO> getMajors() {
-        return majors;
-    }
-
-    public void setMajors(List<MajorDTO> majors) {
-        this.majors = majors;
-    }
+//    public List<MajorDTO> getMajors() {
+//        return majors;
+//    }
+//
+//    public void setMajors(List<MajorDTO> majors) {
+//        this.majors = majors;
+//    }
 }

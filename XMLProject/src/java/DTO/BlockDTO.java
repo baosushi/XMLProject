@@ -1,6 +1,7 @@
 package DTO;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -12,7 +13,7 @@ import javax.xml.bind.annotation.XmlType;
     "name",
     "description",
     "active"})
-public class BlockDTO implements Serializable{
+public class BlockDTO implements Serializable {
 
     @XmlElement(required = true)
     private Integer id;
@@ -22,6 +23,8 @@ public class BlockDTO implements Serializable{
     private String description;
     @XmlElement(required = true)
     private boolean active;
+    @XmlElement(required = true)
+    private List<BlockOfMajorDTO> blockOfMajorList;
 
     public BlockDTO() {
     }

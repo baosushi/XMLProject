@@ -1,5 +1,10 @@
 package DTO;
 
+import BLO.UniversityBLO;
+import com.entities.BlockOfMajor;
+import com.entities.Major;
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,7 +13,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "id",
-    "universityId",
     "name",
     "code",
     "limit",
@@ -16,13 +20,13 @@ import javax.xml.bind.annotation.XmlType;
     "otherEntryQuantity",
     "lastYearEntryQuantity",
     "yearBeforeLastEntryQuantity",
-    "acitve"})
+    "gradeToPass",
+    "university",
+    "active"})
 public class MajorDTO {
 
     @XmlElement(required = true)
     private int id;
-    @XmlElement(required = true)
-    private int universityId;
     @XmlElement(required = true)
     private String name;
     @XmlElement(required = true)
@@ -38,14 +42,19 @@ public class MajorDTO {
     @XmlElement(required = true)
     private int yearBeforeLastEntryQuantity;
     @XmlElement(required = true)
-    private boolean acitve;
+    private double gradeToPass;
+    @XmlElement(required = true)
+    private UniversityDTO university;
+    @XmlElement(required = true)
+    private boolean active;
+//    @XmlElement(required = true)
+//    private List<BlockOfMajorDTO> blockOfMajorList;
 
     public MajorDTO() {
     }
 
     public MajorDTO(int id, int universityId, String name, String code, int limit, int examEntryQuantity, int otherEntryQuantity, int lastYearEntryQuantity, int yearBeforeLastEntryQuantity, boolean acitve) {
         this.id = id;
-        this.universityId = universityId;
         this.name = name;
         this.code = code;
         this.limit = limit;
@@ -53,7 +62,31 @@ public class MajorDTO {
         this.otherEntryQuantity = otherEntryQuantity;
         this.lastYearEntryQuantity = lastYearEntryQuantity;
         this.yearBeforeLastEntryQuantity = yearBeforeLastEntryQuantity;
-        this.acitve = acitve;
+        this.active = acitve;
+
+        UniversityBLO blo = new UniversityBLO();
+        this.university = blo.findById(universityId);
+    }
+
+    public MajorDTO(Major m) {
+        this.id = m.getId();
+        this.university = new UniversityDTO(m.getUniversityId());
+        this.name = m.getMajorName();
+        this.code = m.getMajorCode();
+        this.limit = m.getLimit();
+        this.examEntryQuantity = m.getExamEntryQuantity();
+        this.otherEntryQuantity = m.getOtherEntryQuantity();
+        this.lastYearEntryQuantity = m.getLastYearEntryQuantity();
+        this.yearBeforeLastEntryQuantity = m.getYearBeforeLastEntryQuantity();
+        this.active = m.getActive();
+
+//        if (this.blockOfMajorList == null) {
+//            this.blockOfMajorList = new ArrayList<BlockOfMajorDTO>();
+//        }
+//
+//        for (BlockOfMajor b : m.getBlockOfMajorList()) {
+//            this.blockOfMajorList.add(new BlockOfMajorDTO(b));
+//        }
     }
 
     public int getId() {
@@ -64,12 +97,12 @@ public class MajorDTO {
         this.id = id;
     }
 
-    public int getUniversityId() {
-        return universityId;
+    public UniversityDTO getUniversity() {
+        return university;
     }
 
-    public void setUniversityId(int universityId) {
-        this.universityId = universityId;
+    public void setUniversityId(UniversityDTO university) {
+        this.university = university;
     }
 
     public String getName() {
@@ -129,11 +162,19 @@ public class MajorDTO {
     }
 
     public boolean isAcitve() {
-        return acitve;
+        return active;
     }
 
     public void setAcitve(boolean acitve) {
-        this.acitve = acitve;
+        this.active = acitve;
+    }
+
+    public double getGradeToPass() {
+        return gradeToPass;
+    }
+
+    public void setGradeToPass(double gradeToPass) {
+        this.gradeToPass = gradeToPass;
     }
 
 }
