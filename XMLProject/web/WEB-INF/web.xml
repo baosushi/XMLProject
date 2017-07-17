@@ -5,16 +5,16 @@
         <servlet-class>com.servlets.GetUniversityList</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CrawlDataOfBlocksServlet</servlet-name>
-        <servlet-class>com.servlets.CrawlDataOfBlocksServlet</servlet-class>
+        <servlet-name>CrawlDataServlet</servlet-name>
+        <servlet-class>com.servlets.CrawlDataServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GetUniversityList</servlet-name>
         <url-pattern>/GetUniversityList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CrawlDataOfBlocksServlet</servlet-name>
-        <url-pattern>/CrawlDataOfBlocksServlet</url-pattern>
+        <servlet-name>CrawlDataServlet</servlet-name>
+        <url-pattern>/CrawlDataServlet</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>search.jsp</welcome-file>
@@ -24,4 +24,7 @@
             30
         </session-timeout>
     </session-config>
+<!--    <listener>
+        <listener-class>com.listeners.CrawlDataListener</listener-class>
+    </listener>-->
 </web-app>

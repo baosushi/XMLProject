@@ -17,15 +17,16 @@ import java.util.logging.Logger;
 public class BufferedReaderProvider {
 
 //    public static BufferedReader getBufferedReader(String filePath, String uri) {
-    public static BufferedReader getBufferedReader(String uri) {
+    public static BufferedReader getBufferedReader(String uri) throws IOException {
 //        Writer writer = null;
         BufferedReader bReader = null;
+        InputStream is = null;
 
         try {
             URL url = new URL(uri);
             URLConnection uc = url.openConnection();
             uc.addRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
-            InputStream is = uc.getInputStream();
+            is = uc.getInputStream();
             bReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 //            String inputLine;
 //            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8"));

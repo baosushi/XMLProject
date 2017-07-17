@@ -7,6 +7,8 @@ package com.utilities;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.bind.JAXBContext;
@@ -84,5 +86,63 @@ public class Utils {
             }
         }
         return input;
+    }
+    
+    public static String getHtmlAttributeValue(String input, String attrName) {
+        int openDitto = 0;
+        int closeDitto = 0;
+        boolean getDittoBefore = false;
+        int beginIndex = input.indexOf(attrName);
+        for (int i = beginIndex; i < input.length(); i++) {
+            if (input.charAt(i) == '\"') {
+                if (!getDittoBefore) {
+                    openDitto = i;
+                    getDittoBefore = true;
+                } else {
+                    closeDitto = i;
+                    break;
+                }
+            }
+        }
+        return input.substring(openDitto + 1, closeDitto);
+    }
+    
+    public static String getHtmlTextValue(String input, String tagName) {
+        int begin = 0;
+        int tmp = input.indexOf("<" + tagName);
+        for (int i = tmp; i < input.length(); i++) {
+            if (input.charAt(i) == '>') {
+                begin = i + 1;
+                break;
+            }
+        }
+        int end = input.indexOf("</" + tagName);
+        return input.substring(begin, end).trim();
+    }
+    
+    public static String normalizeHTMLString(String input) {
+        if (input.contains("&#40;")) {
+            input = input.replaceAll("&#40;", "(");
+        }
+        if (input.contains("&#41;")) {
+            input = input.replaceAll("&#41;", ")");
+        }
+        if (input.contains("&amp;")) {
+            input = input.replaceAll("&amp;", "&");
+        }
+        return input;
+    }
+    
+    public static String removeTabCharacters(String input) {
+        return input.replaceAll("\\t", "");
+    }
+    
+    public static <T> Integer getIndexOf(List<T> list, T object) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(object)) {
+                return i;
+            }
+        }
+        return null;
     }
 }

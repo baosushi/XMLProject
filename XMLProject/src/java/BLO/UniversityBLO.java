@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -23,6 +24,22 @@ import javax.persistence.TypedQuery;
 public class UniversityBLO {
 
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("XMLProjectPU");
+
+    public boolean add(University university) {
+        EntityManager em = emf.createEntityManager();
+        boolean isSuccess = false;
+        try {
+            em.getTransaction().begin();
+            em.persist(university);
+            em.getTransaction().commit();
+            isSuccess = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return isSuccess;
+    }
 
     public UniversityDTO findById(int id) {
         EntityManager em = emf.createEntityManager();
@@ -49,7 +66,40 @@ public class UniversityBLO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return null;
+    }
+
+    public Integer getIdBySchoolCode(String schoolCode) {
+        EntityManager em = emf.createEntityManager();
+        University university = null;
+        try {
+            TypedQuery<University> query = em.createNamedQuery("University.findByCode", University.class);
+            query.setParameter("code", schoolCode);
+            university = query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return university == null ? null : university.getId();
+    }
+    
+    public boolean deleteAllRecord() {
+        EntityManager em = emf.createEntityManager();
+        boolean success = false;
+        try {
+            EntityTransaction entr = em.getTransaction();
+            entr.begin();
+            Query query = em.createQuery("DELETE FROM University");
+            query.executeUpdate();
+            entr.commit();
+            success = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+        return success;
     }
 }
