@@ -6,7 +6,7 @@
 package com.servlets;
 
 import BLO.UniversityBLO;
-import DTO.UniversityDTO;
+import com.entities.University;
 import com.utilities.ConstantManager;
 import com.utilities.Utils;
 import java.io.IOException;
@@ -42,11 +42,12 @@ public class GetUniversityInfo extends HttpServlet {
         String url = ConstantManager.errorPage;
         try {
             UniversityBLO blo = new UniversityBLO();
-            UniversityDTO uni = blo.findByCode(code);
+            University uni = blo.findInfoByCode(code);
 
             String xml = Utils.marshallerToString(uni);
             if (xml != null) {
                 request.setAttribute("UniInfo", xml);
+                request.setAttribute("SelectedUniversity", uni);
                 url = ConstantManager.uniInfoPage;
             }
         } finally {

@@ -31,7 +31,7 @@ public class UniversityBLO {
 
         return result == null ? null : new UniversityDTO(result);
     }
-    
+
     public UniversityDTO findByCode(String code) {
         EntityManager em = emf.createEntityManager();
         TypedQuery<University> query = em.createNamedQuery("University.findByCode", University.class);
@@ -39,6 +39,15 @@ public class UniversityBLO {
         University result = query.getResultList().get(0);
 
         return result == null ? null : new UniversityDTO(result);
+    }
+
+    public University findInfoByCode(String code) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<University> query = em.createNamedQuery("University.findByCode", University.class);
+        query.setParameter("code", code);
+        University result = query.getResultList().get(0);
+        
+        return result == null ? null : result;
     }
 
     public UniversityListDTO getAllUniversityDTO() {
@@ -57,7 +66,7 @@ public class UniversityBLO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return null;
     }
 }

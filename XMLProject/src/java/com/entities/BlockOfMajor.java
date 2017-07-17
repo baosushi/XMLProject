@@ -15,7 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -23,7 +28,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "BlockOfMajor")
-@XmlRootElement
+@XmlRootElement(name = "blockOfMajor")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "id",
+    "acceptedEntryLastYear",
+    "baseScoreLastYear",
+    "description",
+    "active",
+    "blockId"})
 @NamedQueries({
     @NamedQuery(name = "BlockOfMajor.findAll", query = "SELECT b FROM BlockOfMajor b"),
     @NamedQuery(name = "BlockOfMajor.findById", query = "SELECT b FROM BlockOfMajor b WHERE b.id = :id"),
@@ -35,32 +48,43 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BlockOfMajor.findByDescription", query = "SELECT b FROM BlockOfMajor b WHERE b.description = :description"),
     @NamedQuery(name = "BlockOfMajor.findByActive", query = "SELECT b FROM BlockOfMajor b WHERE b.active = :active")})
 public class BlockOfMajor implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
+    @XmlElement(required = true)
     private Integer id;
     @Column(name = "MainSubjectCode")
+    @XmlTransient
     private String mainSubjectCode;
     @Column(name = "AcceptedEntryLastYear")
+    @XmlElement(required = true)
     private Integer acceptedEntryLastYear;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "BaseScoreLastYear")
+    @XmlElement(required = true)
     private Double baseScoreLastYear;
     @Column(name = "AcceptedEntryYearBeforeLast")
+    @XmlTransient
     private Integer acceptedEntryYearBeforeLast;
     @Column(name = "BaseScoreYearBeforeLast")
+    @XmlTransient
     private Double baseScoreYearBeforeLast;
     @Column(name = "Description")
+    @XmlElement(required = false)
     private String description;
     @Basic(optional = false)
     @Column(name = "Active")
+    @XmlElement(required = true)
     private boolean active;
     @JoinColumn(name = "BlockId", referencedColumnName = "ID")
     @ManyToOne(optional = false)
+    @XmlElement(name = "block", required = true)
     private Block blockId;
     @JoinColumn(name = "MajorId", referencedColumnName = "ID")
     @ManyToOne(optional = false)
+    @XmlTransient
     private Major majorId;
 
     public BlockOfMajor() {
@@ -179,5 +203,5 @@ public class BlockOfMajor implements Serializable {
     public String toString() {
         return "com.entities.BlockOfMajor[ id=" + id + " ]";
     }
-    
+
 }

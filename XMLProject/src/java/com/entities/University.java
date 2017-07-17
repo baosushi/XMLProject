@@ -20,8 +20,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -29,7 +34,22 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "University")
-@XmlRootElement
+@XmlRootElement(name = "university")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "id",
+    "universityName",
+    "phoneNumber",
+    "email",
+    "website",
+    "logoUrl",
+    "priority",
+    "description",
+    "active",
+    "code",
+    "educationLevel",
+    "majorList"
+})
 @NamedQueries({
     @NamedQuery(name = "University.findAll", query = "SELECT u FROM University u"),
     @NamedQuery(name = "University.findById", query = "SELECT u FROM University u WHERE u.id = :id"),
@@ -50,32 +70,46 @@ public class University implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN")
     @Basic(optional = false)
     @Column(name = "ID")
+    @XmlElement(required = true)
     private Integer id;
     @Column(name = "UniversityName")
+    @XmlElement(required = true)
     private String universityName;
     @Column(name = "PhoneNumber")
+    @XmlElement(required = true)
     private String phoneNumber;
     @Column(name = "Email")
+    @XmlElement(required = true)
     private String email;
     @Column(name = "Website")
+    @XmlElement(required = true)
     private String website;
     @Column(name = "LogoUrl")
+    @XmlElement(required = true)
     private String logoUrl;
     @Basic(optional = false)
     @Column(name = "Priority")
+    @XmlElement(required = true)
     private int priority;
     @Column(name = "Description")
+    @XmlElement(required = true)
     private String description;
     @Column(name = "Active")
+    @XmlElement(required = true)
     private Boolean active;
     @Column(name = "Code")
+    @XmlElement(required = true)
     private String code;
     @Column(name = "EducationLevel")
+    @XmlElement(required = true)
     private Integer educationLevel;
     @OneToMany(mappedBy = "universityId")
+    @XmlElementWrapper(name = "majors")
+    @XmlElement(name="major", required = true)
     private List<Major> majorList;
     @JoinColumn(name = "LocationId", referencedColumnName = "ID")
     @ManyToOne
+    @XmlTransient
     private Location locationId;
 
     public University() {

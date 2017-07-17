@@ -21,8 +21,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -30,7 +35,20 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Major")
-@XmlRootElement
+@XmlRootElement(name = "major")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = {
+    "id",
+    "majorName",
+    "majorCode",
+    "limit",
+    "examEntryQuantity",
+    "otherEntryQuantity",
+    "lastYearEntryQuantity",
+    "yearBeforeLastEntryQuantity",
+    "gradeToPass",
+    "active",
+    "blockOfMajorList"})
 @NamedQueries({
     @NamedQuery(name = "Major.findAll", query = "SELECT m FROM Major m"),
     @NamedQuery(name = "Major.findById", query = "SELECT m FROM Major m WHERE m.id = :id"),
@@ -52,57 +70,80 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Major.findByActive", query = "SELECT m FROM Major m WHERE m.active = :active"),
     @NamedQuery(name = "Major.findByDescription", query = "SELECT m FROM Major m WHERE m.description = :description")})
 public class Major implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @SequenceGenerator(name = "SEQ_GEN", sequenceName = "SEQ_JUST_FOR_TEST", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN")
     @Basic(optional = false)
     @Column(name = "ID")
+    @XmlElement(required = true)
     private Integer id;
     @Column(name = "MBTIGroupId")
+    @XmlTransient
     private Integer mBTIGroupId;
     @Basic(optional = false)
     @Column(name = "MajorName")
+    @XmlElement(required = true)
     private String majorName;
     @Column(name = "MajorCode")
+    @XmlElement(required = true)
     private String majorCode;
     @Column(name = "AlternativeCode")
+    @XmlTransient
     private String alternativeCode;
     @Column(name = "EducationLevel")
+    @XmlTransient
     private Integer educationLevel;
     @Column(name = "Limit")
+    @XmlElement(required = true)
     private Integer limit;
     @Column(name = "ExamEntryQuantity")
+    @XmlElement(required = false)
     private Integer examEntryQuantity;
     @Column(name = "OtherEntryQuantity")
+    @XmlElement(required = true)
     private Integer otherEntryQuantity;
     @Column(name = "LastYearEntryQuantity")
+    @XmlElement(required = true)
     private Integer lastYearEntryQuantity;
     @Column(name = "YearBeforeLastEntryQuantity")
+    @XmlElement(required = false)
     private Integer yearBeforeLastEntryQuantity;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "GradeToPass")
+    @XmlElement(required = true)
     private Double gradeToPass;
     @Column(name = "Rate")
+    @XmlTransient
     private Integer rate;
     @Column(name = "FromGrade")
+    @XmlTransient
     private Integer fromGrade;
     @Column(name = "BlockName")
+    @XmlTransient
     private String blockName;
     @Column(name = "ToGrade")
+    @XmlTransient
     private Integer toGrade;
     @Basic(optional = false)
     @Column(name = "Active")
+    @XmlElement(required = true)
     private boolean active;
     @Column(name = "Description")
+    @XmlTransient
     private String description;
     @JoinColumn(name = "MajorGroupId", referencedColumnName = "ID")
     @ManyToOne
+    @XmlTransient
     private MajorGroup majorGroupId;
     @JoinColumn(name = "UniversityId", referencedColumnName = "ID")
     @ManyToOne
+    @XmlTransient
     private University universityId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "majorId")
+    @XmlElementWrapper(name = "blockOfMajors")
+    @XmlElement(name="blockOfMajor", required = true)
     private List<BlockOfMajor> blockOfMajorList;
 
     public Major() {
@@ -311,5 +352,5 @@ public class Major implements Serializable {
     public String toString() {
         return "com.entities.Major[ id=" + id + " ]";
     }
-    
+
 }

@@ -78,8 +78,8 @@ public class Utils {
             marshaller.marshal(object, sw);
 
             return sw.toString();
-        } catch (JAXBException ex) {
-            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         return null;

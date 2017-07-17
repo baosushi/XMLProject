@@ -19,8 +19,12 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -28,7 +32,13 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "Block")
-@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "block")
+@XmlType(name = "", propOrder = {
+    "id",
+    "blockName",
+    "description",
+    "active"})
 @NamedQueries({
     @NamedQuery(name = "Block.findAll", query = "SELECT b FROM Block b"),
     @NamedQuery(name = "Block.findById", query = "SELECT b FROM Block b WHERE b.id = :id"),
@@ -43,18 +53,24 @@ public class Block implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GEN")
     @Basic(optional = false)
     @Column(name = "ID")
+    @XmlElement(required = true)
     private Integer id;
     @Basic(optional = false)
     @Column(name = "BlockName")
+    @XmlElement(required = true)
     private String blockName;
     @Column(name = "Description")
+    @XmlElement(required = false)
     private String description;
     @Basic(optional = false)
     @Column(name = "Active")
+    @XmlElement(required = true)
     private boolean active;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "blockId")
+    @XmlTransient
     private List<BlockOfMajor> blockOfMajorList;
     @OneToMany(mappedBy = "blockId")
+    @XmlTransient
     private List<SubjectOfBlock> subjectOfBlockList;
 
     public Block() {
