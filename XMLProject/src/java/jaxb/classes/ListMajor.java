@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for listBlock complex type.
+ * <p>Java class for listMajor complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="listBlock">
+ * &lt;complexType name="listMajor">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="block" type="{http://xml.netbeans.org/schema/university}blockItem" maxOccurs="unbounded"/>
+ *         &lt;element name="major" type="{http://www.w3.org/2001/XMLSchema}anyType" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,41 +29,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "listBlock", propOrder = {
-    "block"
+@XmlType(name = "listMajor", propOrder = {
+    "major"
 })
-public class ListBlock {
+public class ListMajor {
 
     @XmlElement(required = true)
-    protected List<BlockItem> block;
+    protected List<Object> major;
 
     /**
-     * Gets the value of the block property.
+     * Gets the value of the major property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the block property.
+     * This is why there is not a <CODE>set</CODE> method for the major property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getBlock().add(newItem);
+     *    getMajor().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link BlockItem }
+     * {@link Object }
      * 
      * 
      */
-    public List<BlockItem> getBlock() {
-        if (block == null) {
-            block = new ArrayList<BlockItem>();
+    public List<Object> getMajor() {
+        if (major == null) {
+            major = new ArrayList<Object>();
         }
-        return this.block;
+        return this.major;
     }
 
 }

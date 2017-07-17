@@ -6,6 +6,9 @@ import com.sun.tools.xjc.api.S2JJAXBModel;
 import com.sun.tools.xjc.api.SchemaCompiler;
 import com.sun.tools.xjc.api.XJC;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXParseException;
 
@@ -47,8 +50,8 @@ public class JaxbGenerator {
             JCodeModel code = model.generateCode(null, null);
             code.build(new File(output));
             System.out.println(schemaFile + " generate finished");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } 
     }
 }

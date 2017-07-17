@@ -10,16 +10,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for listBlock complex type.
+ * <p>Java class for listUniversity complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="listBlock">
+ * &lt;complexType name="listUniversity">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="block" type="{http://xml.netbeans.org/schema/university}blockItem" maxOccurs="unbounded"/>
+ *         &lt;element name="university" type="{http://xml.netbeans.org/schema/university}universityItem" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -29,41 +29,49 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "listBlock", propOrder = {
-    "block"
+@XmlType(name = "listUniversity", propOrder = {
+    "university"
 })
-public class ListBlock {
+public class ListUniversity {
 
     @XmlElement(required = true)
-    protected List<BlockItem> block;
+    protected List<UniversityItem> university;
 
     /**
-     * Gets the value of the block property.
+     * Gets the value of the university property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the block property.
+     * This is why there is not a <CODE>set</CODE> method for the university property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getBlock().add(newItem);
+     *    getUniversity().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link BlockItem }
+     * {@link UniversityItem }
      * 
      * 
      */
-    public List<BlockItem> getBlock() {
-        if (block == null) {
-            block = new ArrayList<BlockItem>();
+    public List<UniversityItem> getUniversity() {
+        if (university == null) {
+            university = new ArrayList<UniversityItem>();
         }
-        return this.block;
+        return this.university;
     }
 
+    public UniversityItem getUniversityItemByCode(String code) {
+        for (UniversityItem each : university) {
+            if (each.getCode().equals(code)) {
+                return each;
+            }
+        }
+        return null;
+    }
 }

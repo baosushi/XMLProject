@@ -24,13 +24,22 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _Blocks_QNAME = new QName("http://xml.netbeans.org/schema/blocks", "blocks");
+    private final static QName _Universities_QNAME = new QName("http://xml.netbeans.org/schema/university", "universities");
+    private final static QName _Blocks_QNAME = new QName("http://xml.netbeans.org/schema/university", "blocks");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: jaxb.classes
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link ListUniversity }
+     * 
+     */
+    public ListUniversity createListUniversity() {
+        return new ListUniversity();
     }
 
     /**
@@ -42,6 +51,30 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Major }
+     * 
+     */
+    public Major createMajor() {
+        return new Major();
+    }
+
+    /**
+     * Create an instance of {@link UniversityItem }
+     * 
+     */
+    public UniversityItem createUniversityItem() {
+        return new UniversityItem();
+    }
+
+    /**
+     * Create an instance of {@link ListMajor }
+     * 
+     */
+    public ListMajor createListMajor() {
+        return new ListMajor();
+    }
+
+    /**
      * Create an instance of {@link BlockItem }
      * 
      */
@@ -50,10 +83,19 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ListUniversity }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://xml.netbeans.org/schema/university", name = "universities")
+    public JAXBElement<ListUniversity> createUniversities(ListUniversity value) {
+        return new JAXBElement<ListUniversity>(_Universities_QNAME, ListUniversity.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link ListBlock }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://xml.netbeans.org/schema/blocks", name = "blocks")
+    @XmlElementDecl(namespace = "http://xml.netbeans.org/schema/university", name = "blocks")
     public JAXBElement<ListBlock> createBlocks(ListBlock value) {
         return new JAXBElement<ListBlock>(_Blocks_QNAME, ListBlock.class, null, value);
     }

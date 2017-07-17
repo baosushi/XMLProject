@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<xsd:schema version="1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://xml.netbeans.org/schema/university"
+            xmlns="http://xml.netbeans.org/schema/university"
+            elementFormDefault="qualified">
+            <!--xmlns:blocks="http://xml.netbeans.org/schema/block"-->
+    <!--<xsd:import namespace="http://xml.netbeans.org/schema/block" schemaLocation="block.xsd"/>--> 
+    <xsd:include schemaLocation="block.xsd"/> 
+    <xsd:element name="universities" type="listUniversity"/>
+    <xsd:complexType name="listUniversity">
+        <xsd:sequence>
+            <xsd:element name="university" type="universityItem" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="universityItem">
+        <xsd:sequence>
+            <xsd:element name="id" type="xsd:positiveInteger"/>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="locationId" type="xsd:positiveInteger" minOccurs="0"/>
+            <xsd:element name="phoneNumber" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="email" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="website" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="logoUrl" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="priority" type="xsd:positiveInteger"/>
+            <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="active" type="xsd:boolean"/>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="educationLevel" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="majors" type="listMajor"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="listMajor">
+        <xsd:sequence>
+            <xsd:element name="major" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="major">
+        <xsd:sequence>
+            <xsd:element name="block" type="blockItem" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="baseScore" type="score" minOccurs="0"/>
+            <xsd:element name="acceptEntry" type="xsd:positiveInteger" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:simpleType name="score">
+        <xsd:restriction base="xsd:decimal">
+            <xsd:minInclusive value="0"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

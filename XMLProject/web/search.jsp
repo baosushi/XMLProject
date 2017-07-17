@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
+        <%--<jsp:forward page="/CrawlDataServlet" />--%>
         <div id="demo">
             <h1>Danh sách các trường đại học</h1>
             <h2>Bấm vào từng trường để xem thông tin chi tiết và điểm chuẩn gần nhất</h2>

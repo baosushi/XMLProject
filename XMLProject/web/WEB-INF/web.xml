@@ -8,6 +8,10 @@
         <servlet-name>CrawlDataServlet</servlet-name>
         <servlet-class>com.servlets.CrawlDataServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>TransformPDF</servlet-name>
+        <servlet-class>com.servlets.TransformPDF</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetUniversityList</servlet-name>
         <url-pattern>/GetUniversityList</url-pattern>
@@ -19,12 +23,16 @@
     <welcome-file-list>
         <welcome-file>search.jsp</welcome-file>
     </welcome-file-list>
+    <servlet-mapping>
+        <servlet-name>TransformPDF</servlet-name>
+        <url-pattern>/TransformPDF</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-<!--    <listener>
+    <!--    <listener>
         <listener-class>com.listeners.CrawlDataListener</listener-class>
     </listener>-->
 </web-app>

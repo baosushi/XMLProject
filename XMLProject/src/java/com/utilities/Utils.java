@@ -5,6 +5,7 @@
  */
 package com.utilities;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -67,6 +68,21 @@ public class Utils {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
     } 
+    
+    public static <T> void marshallerToFile(T object) {
+        try {
+            JAXBContext jaxb = JAXBContext.newInstance(object.getClass());
+            Marshaller marshaller = jaxb.createMarshaller();
+            
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            
+            marshaller.marshal(object, new File("university.xml"));
+        } catch (JAXBException ex) {
+            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     
     public static String removeBrackets(String input) {
         while (input.contains("<")) {
