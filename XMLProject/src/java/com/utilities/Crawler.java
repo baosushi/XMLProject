@@ -23,7 +23,7 @@ public class Crawler {
     public Crawler() {
         this.blocks = new ArrayList<Block>();
         this.universities = new ArrayList<University>();
-        getListOfUniversity();
+        getListOfUniversity(); 
         this.linkOfUniversity = new HashMap<String, String>();
     }
 
