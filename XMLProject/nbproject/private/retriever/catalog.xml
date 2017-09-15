@@ -2,4 +2,5 @@
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
     <system systemId="http://xml.netbeans.org/" uri="xml.netbeans.org/index"/>
     <system systemId="http://xml.netbeans.org/schema/" uri="xml.netbeans.org/schema/index"/>
+    <system systemId="http://www.w3.org/1999/XSL/Format" uri="www.w3.org/1999/xsl/format"/>
 </catalog>

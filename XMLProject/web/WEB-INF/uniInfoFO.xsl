@@ -10,6 +10,7 @@
 
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
     <xsl:output method="xml"/>
+    <xsl:param name="pathFile"/>
     <xsl:template match="/">
         <fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format" >
             <fo:layout-master-set>
@@ -23,32 +24,32 @@
             </fo:layout-master-set>
             
             <fo:page-sequence master-reference="master-page" >
-                <fo:static-content flow-name="xsl-region-before">
+<!--                <fo:static-content flow-name="xsl-region-before">
                     <fo:block font-family="Arial" font-size="14pt" font-weight="bold">                       
                         <fo:inline> 
                             <fo:external-graphic width="50px" height="50px" >
                                 <xsl:attribute name="src">
-                                    <xsl:value-of select="concat($pathFile,p:data/p:logo)"/>
+                                    <xsl:value-of select="concat($pathFile,data/logo)"/>
                                 </xsl:attribute>
                             </fo:external-graphic>
                         </fo:inline>
                         <fo:inline font-weight="bold" font-size="14pt" font-family="Arial" >
                             <fo:leader leader-length="0pt" /> 
-                            Phòng khám <xsl:value-of select="p:data/p:clinicName"/> 
+                            Phòng khám <xsl:value-of select="data/clinicName"/> 
                         </fo:inline>
                     </fo:block> 
                     <fo:block margin-left="50px" font-family="Arial"  font-size="14pt" color="BLUE">
                         <fo:inline>
                             <fo:leader leader-length="0pt" /> 
-                            Địa chỉ <xsl:value-of select="p:data/p:doctor/p:address"/>
+                            Địa chỉ <xsl:value-of select="data/doctor/address"/>
                         </fo:inline> 
                     </fo:block>                   
                     <fo:block font-family="Arial"  margin-left="50px" color="BLUE">
-                        Điện thoại <xsl:value-of select="p:data/p:doctor/p:phone"/>
+                        Điện thoại <xsl:value-of select="data/doctor/phone"/>
                     </fo:block>
                     <fo:block font-size="12pt" font-family="Arial" text-align="right">
                         <fo:inline>
-                            Mã sô bệnh <xsl:value-of select="p:data/p:patient/p:id"/>
+                            Mã sô bệnh <xsl:value-of select="data/patient/id"/>
                         </fo:inline> 
                     </fo:block>
                 </fo:static-content>
@@ -57,44 +58,44 @@
                         Bác sĩ khám bệnh:
                     </fo:block>
                     <fo:block font-size="12pt" text-align="right" font-family="Arial">
-                        Ngày khám:  <xsl:value-of select="p:data/p:examinationDay"/> 
+                        Ngày khám:  <xsl:value-of select="data/examinationDay"/> 
                     </fo:block>
                     <fo:block text-align="left" margin-left="10px" margin-top="40px" font-family="Arial" text-decoration="underline">
-                        <xsl:value-of select="p:data/p:doctor/p:name"/> 
+                        <xsl:value-of select="data/doctor/name"/> 
                     </fo:block>
-                </fo:static-content>
+                </fo:static-content>-->
                 <fo:flow flow-name="xsl-region-body">
-                    <fo:block font-size="18pt" font-family="Arial"  margin-top="40px"
-                              text-align="center">
+                    <fo:block font-size="18pt" color="#000000" margin-top="40px"
+                              text-align="center" height="20px" background-color="#000000">
                         TOA THUỐC
                     </fo:block>
-                    <fo:block font-family="Arial" font-size="10.5pt"  line-height="1.7205" font-weight="bold">
+<!--                    <fo:block font-family="Arial" font-size="10.5pt"  line-height="1.7205" font-weight="bold">
                         <fo:inline font-weight="bold" font-size="10.5pt">
                             <fo:leader leader-length="0pt"/>
-                            Tên bệnh nhân: <xsl:value-of select="p:data/p:patient/p:name"/>
+                            Tên bệnh nhân: <xsl:value-of select="data/patient/name"/>
                         </fo:inline> 
                     </fo:block>
                     <fo:block  font-family="Arial" font-size="10.5pt"
                                line-height="2" font-weight="bold">
                         <fo:inline font-weight="bold" font-size="10.5pt">
                             <fo:leader leader-length="0pt"/>
-                            Giới tính: <xsl:value-of select="p:data/p:patient/p:sex"/>
+                            Giới tính: <xsl:value-of select="data/patient/sex"/>
                         </fo:inline>  
                         <fo:inline font-weight="bold" font-size="10.5pt">
                             <fo:leader leader-length="0pt"/>
-                            Tuổi: <xsl:value-of select="p:data/p:patient/p:age"/>
+                            Tuổi: <xsl:value-of select="data/patient/age"/>
                         </fo:inline>
                     </fo:block>
                     <fo:block font-family="Arial" font-size="10.5pt" line-height="2" font-weight="bold">
                         <fo:inline font-weight="bold" font-size="10.5pt">
                             <fo:leader leader-length="0pt"/>
-                            Địa chỉ: <xsl:value-of select="p:data/p:patient/p:address"/>
+                            Địa chỉ: <xsl:value-of select="data/patient/address"/>
                         </fo:inline>
                     </fo:block>
                     <fo:block font-family="Arial" font-size="10.5pt" line-height="1.7205" font-weight="bold">
                         <fo:inline font-weight="bold" font-size="10.5pt">
                             <fo:leader leader-length="0pt"/>
-                            Chẩn đoán: <xsl:value-of select="p:data/p:prediction"/>
+                            Chẩn đoán: <xsl:value-of select="data/prediction"/>
                         </fo:inline>
                     </fo:block>
                     <fo:block font-family="Arial" font-size="10.5pt" line-height="1.7205" font-weight="bold">
@@ -152,33 +153,33 @@
                                     </fo:block>
                                 </fo:table-cell>
                             </fo:table-row>
-                            <xsl:for-each select="p:data/p:medicines/p:medicine">
+                            <xsl:for-each select="data/medicines/medicine">
                                 <fo:table-row font-family="Arial">
                                     <fo:table-cell padding-top="0pt" padding-left="5.4pt" padding-bottom="0pt" padding-right="5.4pt" border-left-style="solid" border-right-style="solid" border-left-color="#000080" border-right-color="#000080" border-left-width="0.375pt" border-right-width="0.375pt" border-top-style="solid" border-bottom-style="solid" border-top-color="#000080" border-bottom-color="#000080" border-top-width="0.375pt" border-bottom-width="0.375pt" >
                                         <fo:block>
-                                            <xsl:number level="single" count="p:medicine"/>.</fo:block>
+                                            <xsl:number level="single" count="medicine"/>.</fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell padding-top="0pt" padding-left="5.4pt" padding-bottom="0pt" padding-right="5.4pt" border-left-style="solid" border-right-style="solid" border-left-color="#000080" border-right-color="#000080" border-left-width="0.375pt" border-right-width="0.375pt" border-top-style="solid" border-bottom-style="solid" border-top-color="#000080" border-bottom-color="#000080" border-top-width="0.375pt" border-bottom-width="0.375pt" >
                                         <fo:block  line-height="1.7205" font-weight="bold">
-                                            <xsl:value-of select="p:name"/>
+                                            <xsl:value-of select="name"/>
                                         </fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell padding-top="0pt" padding-left="5.4pt" padding-bottom="0pt" padding-right="5.4pt" border-left-style="solid" border-right-style="solid" border-left-color="#000080" border-right-color="#000080" border-left-width="0.375pt" border-right-width="0.375pt" border-top-style="solid" border-bottom-style="solid" border-top-color="#000080" border-bottom-color="#000080" border-top-width="0.375pt" border-bottom-width="0.375pt">
                                         <fo:block line-height="1.7205" font-weight="bold"> 
-                                            <xsl:value-of select="p:morning"/> viên 
+                                            <xsl:value-of select="morning"/> viên 
                                         </fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell padding-top="0pt" padding-left="5.4pt" padding-bottom="0pt" padding-right="5.4pt" border-left-style="solid" border-right-style="solid" border-left-color="#000080" border-right-color="#000080" border-left-width="0.375pt" border-right-width="0.375pt" border-top-style="solid" border-bottom-style="solid" border-top-color="#000080" border-bottom-color="#000080" border-top-width="0.375pt" border-bottom-width="0.375pt">
                                         <fo:block line-height="1.7205" font-weight="bold">  
-                                            <xsl:value-of select="p:lunch"/> viên </fo:block>
+                                            <xsl:value-of select="lunch"/> viên </fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell padding-top="0pt" padding-left="5.4pt" padding-bottom="0pt" padding-right="5.4pt" border-left-style="solid" border-right-style="solid" border-left-color="#000080" border-right-color="#000080" border-left-width="0.375pt" border-right-width="0.375pt" border-top-style="solid" border-bottom-style="solid" border-top-color="#000080" border-bottom-color="#000080" border-top-width="0.375pt" border-bottom-width="0.375pt">
                                         <fo:block line-height="1.7205" font-weight="bold">  
-                                            <xsl:value-of select="p:night"/> viên </fo:block>
+                                            <xsl:value-of select="night"/> viên </fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell padding-top="0pt" padding-left="5.4pt" padding-bottom="0pt" padding-right="5.4pt" border-left-style="solid" border-right-style="solid" border-left-color="#000080" border-right-color="#000080" border-left-width="0.375pt" border-right-width="0.375pt" border-top-style="solid" border-bottom-style="solid" border-top-color="#000080" border-bottom-color="#000080" border-top-width="0.375pt" border-bottom-width="0.375pt">
                                         <fo:block line-height="1.7205" font-weight="bold">  
-                                            <xsl:value-of select="p:during"/> ngày </fo:block>
+                                            <xsl:value-of select="during"/> ngày </fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
                             </xsl:for-each>
@@ -188,7 +189,7 @@
                               font-weight="bold">Lời khuyên
                     </fo:block>
                     <fo:list-block font-family="Arial" > 
-                        <xsl:for-each select="p:data/p:advices/p:advice">
+                        <xsl:for-each select="data/advices/advice">
                             <fo:list-item>
                                 <fo:list-item-label>
                                     <fo:block>*</fo:block>
@@ -204,14 +205,11 @@
                             <fo:list-item-label>
                                 <fo:block></fo:block>
                             </fo:list-item-label>
-                            <fo:list-item-body margin-left="20px">
-                                <fo:block>---------------</fo:block>
-                            </fo:list-item-body>
                         </fo:list-item>
                     </fo:list-block> 
                     <fo:block margin-top="20px" line-height="1.7205" font-size="13pt"
-                              font-weight="bold">Ngày tái khám: <xsl:value-of select="p:data/p:reExamination"/>
-                    </fo:block>
+                              font-weight="bold">Ngày tái khám: <xsl:value-of select="data/reExamination"/>
+                    </fo:block>-->
                 </fo:flow>
             </fo:page-sequence> 
         </fo:root>

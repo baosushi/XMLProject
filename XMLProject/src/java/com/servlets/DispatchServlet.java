@@ -42,6 +42,10 @@ public class DispatchServlet extends HttpServlet {
 
             if (action.equalsIgnoreCase("uniInfo")) {
                 url = ConstantManager.uniInfo;
+            } else if(action.equalsIgnoreCase("home")) {
+                url = ConstantManager.homePage;
+            } else if(action.equalsIgnoreCase("search")) {
+                url = ConstantManager.searchPage;
             }
         } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);

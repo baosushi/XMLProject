@@ -91,6 +91,9 @@
         
         <xsl:choose>
             <xsl:when test="count(majors)>0">
+                <div class="pull-right">
+                    <button class="btn-custom" onclick="generatePDF()">Tải thông tin trường</button>
+                </div>
                 <table id="table" class="shadow-z-1 table table-hover table-mc-light-blue">
                     <thead>
                         <tr>

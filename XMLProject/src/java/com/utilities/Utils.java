@@ -5,6 +5,9 @@
  */
 package com.utilities;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
@@ -21,7 +24,16 @@ import javax.xml.transform.Source;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import org.apache.fop.apps.FOPException;
+import org.apache.fop.apps.FOUserAgent;
+import org.apache.fop.apps.Fop;
+import org.apache.fop.apps.FopFactory;
+import org.apache.fop.apps.MimeConstants;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -42,6 +54,23 @@ public class Utils {
             e.printStackTrace();
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    public static void TransformToPDF(Source instruction, OutputStream pdfFile, String pathFile) {
+        try {
+            FopFactory ff = FopFactory.newInstance();
+            FOUserAgent fua = ff.newFOUserAgent();
+            Fop fop = ff.newFop(MimeConstants.MIME_PDF, fua, pdfFile);
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer transformer = tf.newTransformer();
+            transformer.setParameter("pathFile", pathFile);
+            Result result = new SAXResult(fop.getDefaultHandler());
+            transformer.transform(instruction, result);
+        } catch (FOPException ex) {
+            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -83,8 +112,20 @@ public class Utils {
         }
 
         return null;
-    } 
-    
+    }
+
+    public static <T> void marshallerToFile(T object, File file) {
+        try {
+            JAXBContext jaxb = JAXBContext.newInstance(object.getClass());
+            Marshaller marshaller = jaxb.createMarshaller();
+//            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, "UTF-8");
+            marshaller.marshal(object, file);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static String removeBrackets(String input) {
         while (input.contains("<")) {
             for (int i = input.length() - 1; i >= 0; i--) {

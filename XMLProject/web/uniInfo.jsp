@@ -15,6 +15,22 @@
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
+        <div class="nav-fixed">
+            <div class="logo">
+                <img src="images/graduation-white-hat-icon-77155.png" alt="graduation-white-hat-icon-77155"/>
+            </div>
+            <div class="menu-container">
+                <h2>
+                    Tuyển sinh XML
+                </h2>
+                <div class="menu-item">
+                    <a href="dispatch?action=search">Danh sách các trường Đại học</a>
+                </div>
+                <div class="menu-item">
+                    <a href="dispatch?action=home">Trang chủ</a>
+                </div>
+            </div>
+        </div>
         <div id="demo">
             <h1>Thông tin tuyển sinh</h1>
             <h1><b>${SelectedUniversity.getUniversityName()}</b></h1>
@@ -48,6 +64,7 @@
         <script src="js/common.js" type="text/javascript"></script>
         <script>
             var xml = '${UniInfo}';
+            var xmlHttp;
             var xmlDOM;
             var xmlDoc;
             var data = [];
@@ -71,7 +88,7 @@
 //                    var toggleState = row.getAttribute("data-toggle");
                     var table = document.getElementById("modal-table");
                     var modal = document.getElementsByClassName("modal")[0];
-                    modal.querySelector("#major-name").innerText = "Ngành " + row.childNodes[2].innerText.replace(/Ngành/g, "").replace(/ngành/g, "").replace(/[.]$/g, "").replace(/\s+/g," ");
+                    modal.querySelector("#major-name").innerText = "Ngành " + row.childNodes[2].innerText.replace(/Ngành/g, "").replace(/ngành/g, "").replace(/[.]$/g, "").replace(/\s+/g, " ");
 
 //                    if (toggleState == 'false') {
 //                        toggleState = 'true';
@@ -144,6 +161,34 @@
                 node.childNodes.forEach(function (value, index) {
                     searchNode(value, tableId);
                 });
+            }
+
+            function generatePDF() {
+                xmlHttp = getXmlHttpObject();
+                if (xmlHttp == null) {
+                    alert("Ajax not supported!");
+                }
+
+                var url = "PDFProcess?uniCode=" + xmlDOM.firstElementChild.getElementsByTagName("code")[0].textContent;
+
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.readyState == 4) { // Code 200 (or not :( )
+                        if (xmlHttp.status == 200) {
+                            var blob = new Blob([xmlHttp.responseText], {type: "application/pdf"});
+
+                            var a = document.createElement('a');
+                            a.href = window.URL.createObjectURL(blob);
+                            a.download = xmlDOM.firstElementChild.getElementsByTagName("code")[0].textContent + "-ThongTinTuyenSinh.pdf";
+                            a.target = "_blank";
+                            a.click();
+                        } else {
+                            console.log("Request status: " + xmlHttp.status);
+                        }
+                    }
+                };
+
+                xmlHttp.open("GET", url, true);
+                xmlHttp.send(null);
             }
         </script>
     </body>
